@@ -1,0 +1,18 @@
+Amethyst
+========
+
+Universial remote for torrents, reddit streams, and more
+Utilize AceStream (branch of VLC) command line for displaying video.
+
+Features:
+
+web:
+
+Remote for controlling what's currently playing
+UI for browsing currently available streams via reddit
+UI for browsing currently available torrents via TBP
+
+api:
+
+Get status of current stream
+Endpoints for controlling / changing the stream
