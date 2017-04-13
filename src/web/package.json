@@ -1,0 +1,28 @@
+{
+  "name": "amethyst-web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tVoss/amethyst.git"
+  },
+  "author": "Tyler Voss <tVoss42@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/%3AtVoss/amethyst/issues"
+  },
+  "homepage": "https://github.com/%3AtVoss/amethyst#readme",
+  "dependencies": {
+    "axios": "^0.16.1",
+    "material-ui": "^0.17.3",
+    "moment": "^2.18.1",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-router": "^4.1.1",
+    "react-tap-event-plugin": "^2.0.1"
+  }
+}
