@@ -1,13 +1,15 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import {Router, Route, IndexRoute, browserHistory} from 'react-router';
+import {Router, Route, IndexRoute} from 'react-router';
+import createHistory from 'history/createBrowserHistory'
 
-const App = null;
+const history = createHistory()
+import App from './components/app'
+
 
 ReactDOM.render(
-    <Router history={browserHistory}>
+    <Router history={history}>
         <Route path="/" component={App}>
-            <IndexRoute component={null} />
         </Route>
     </Router>
 , document.querySelector('#main'));
