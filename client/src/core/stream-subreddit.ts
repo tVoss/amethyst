@@ -11,16 +11,28 @@ export default class StreamSubreddit {
         this.url = `https://www.reddit.com/r/${sport}streams.json`;
     }
 
-    getStreamPosts(refresh: boolean = false)  {
-        if (!refresh && this.streamPosts) {
-            console.log(this.streamPosts)
-        }
+    getStreamPosts(refresh: boolean = false): Promise<StreamPost[]>  {
+        return new Promise((resolve, reject) => {
+            if (!refresh && this.streamPosts) {
+                resolve(this.streamPosts);
+            }
 
-        axios.get(this.url).then(res => {
-            console.log(res)
-        }).catch(err => {
-            console.error(err)
+            axios.get(this.url).then(res => {
+
+                this.streamPosts = res.data.data.children
+                    .filter(t1 => {
+                        return t1.data.title.includes('Game Thread:')
+                    })
+                    .map(t1 => {
+                        return new StreamPost(t1.data);
+                });
+
+                resolve(this.streamPosts);
+            }).catch(err => {
+                reject('Subreddit not reachable');
+            })
         })
+
 
     }
 }
