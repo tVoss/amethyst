@@ -1,0 +1,6 @@
+sport = document.getElementsByClassName('logoWall')[0]
+logos = [].slice.call(sport.children)
+mapping = logos.map(l => [l.children[0].title, l.children[0].children[0].src])
+final = {}
+mapping.forEach(m => final[m[0]] = m[1])
+copy(final)

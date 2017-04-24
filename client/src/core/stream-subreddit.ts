@@ -1,4 +1,4 @@
-import axios from 'axios'
+import Axios from 'axios'
 
 import StreamPost from './stream-post'
 
@@ -9,22 +9,24 @@ export default class StreamSubreddit {
 
     constructor(sport: string) {
         this.url = `https://www.reddit.com/r/${sport}streams.json`;
+        this.streamPosts = null;
     }
 
     getStreamPosts(refresh: boolean = false): Promise<StreamPost[]>  {
         return new Promise((resolve, reject) => {
             if (!refresh && this.streamPosts) {
                 resolve(this.streamPosts);
+                return;
             }
 
-            axios.get(this.url).then(res => {
+            Axios.get(this.url).then(res => {
 
                 this.streamPosts = res.data.data.children
-                    .filter(t1 => {
-                        return t1.data.title.includes('Game Thread:')
+                    .filter(t3 => {
+                        return t3.data.title.includes('Game Thread:')
                     })
-                    .map(t1 => {
-                        return new StreamPost(t1.data);
+                    .map(t3 => {
+                        return new StreamPost(t3.data);
                 });
 
                 resolve(this.streamPosts);
