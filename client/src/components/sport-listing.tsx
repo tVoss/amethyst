@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Paper from 'material-ui/Paper';
 
 import StreamSubreddit from '../core/stream-subreddit'
 import StreamPost from '../core/stream-post'
@@ -6,7 +7,7 @@ import StreamPost from '../core/stream-post'
 import GameListing from './game-listing'
 
 interface Props {
-    sport: string
+    sub: StreamSubreddit
 }
 
 interface State {
@@ -15,14 +16,10 @@ interface State {
 
 export default class SportListing extends React.Component<Props, State> {
 
-    private sub: StreamSubreddit;
-
     constructor(props: Props) {
         super(props);
 
-        this.sub = new StreamSubreddit(props.sport);
-
-        this.sub.getStreamPosts().then(posts => {
+        this.props.sub.getStreamPosts().then(posts => {
             this.setState({
                 ...this.state,
                 posts
@@ -36,9 +33,9 @@ export default class SportListing extends React.Component<Props, State> {
 
     render() {
         return (
-            <div>
+            <Paper style={{magrin: '8px', padding: '8px'}}>
                 {this.state.posts.map(this.renderPost)}
-            </div>
+            </Paper>
         );
     }
 
@@ -46,7 +43,6 @@ export default class SportListing extends React.Component<Props, State> {
         return (
             <GameListing
                 key={post.getTitle()}
-                sport={this.props.sport}
                 post={post} />
         )
     }

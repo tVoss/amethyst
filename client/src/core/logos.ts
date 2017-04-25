@@ -1,4 +1,4 @@
-const nba = {
+const nbastreams = {
     "Atlanta Hawks": "http://content.sportslogos.net/logos/6/220/thumbs/22091682016.gif",
     "Boston Celtics": "http://content.sportslogos.net/logos/6/213/thumbs/slhg02hbef3j1ov4lsnwyol5o.gif",
     "Brooklyn Nets": "http://content.sportslogos.net/logos/6/3786/thumbs/hsuff5m3dgiv20kovde422r1f.gif",
@@ -31,7 +31,7 @@ const nba = {
     "Washington Wizards": "http://content.sportslogos.net/logos/6/219/thumbs/21956712016.gif"
 }
 
-const mlb = {
+const mlbstreams = {
     "Baltimore Orioles": "http://content.sportslogos.net/logos/53/52/thumbs/lty880yrmrra64y6tqfqmdnbf.gif",
     "Boston Red Sox": "http://content.sportslogos.net/logos/53/53/thumbs/c0whfsa9j0vbs079opk2s05lx.gif",
     "Chicago White Sox": "http://content.sportslogos.net/logos/53/55/thumbs/oxvkprv7v4inf5dgqdebp0yse.gif",
@@ -64,7 +64,7 @@ const mlb = {
     "Washington Nationals": "http://content.sportslogos.net/logos/54/578/thumbs/rcehah9k0kekjkgzm077fflws.gif"
 }
 
-const nfl = {
+const nflstreams = {
     "Arizona Cardinals": "http://content.sportslogos.net/logos/7/177/thumbs/kwth8f1cfa2sch5xhjjfaof90.gif",
     "Atlanta Falcons": "http://content.sportslogos.net/logos/7/173/thumbs/299.gif",
     "Baltimore Ravens": "http://content.sportslogos.net/logos/7/153/thumbs/318.gif",
@@ -99,7 +99,7 @@ const nfl = {
     "Washington Redskins": "http://content.sportslogos.net/logos/7/168/thumbs/im5xz2q9bjbg44xep08bf5czq.gif"
 }
 
-const nhl = {
+const nhlstreams = {
     "Anaheim Ducks": "http://content.sportslogos.net/logos/1/1736/thumbs/173616512014.gif",
     "Arizona Coyotes": "http://content.sportslogos.net/logos/1/5263/thumbs/526378072015.gif",
     "Boston Bruins": "http://content.sportslogos.net/logos/1/3/thumbs/venf9fmhgnsawnxxvehf.gif",
@@ -134,8 +134,8 @@ const nhl = {
 }
 
 export default {
-    mlb,
-    nba,
-    nfl,
-    nhl
+    mlbstreams,
+    nbastreams,
+    nflstreams,
+    nhlstreams
 }

@@ -12,19 +12,21 @@ import Logos from '../core/logos'
 export default class App extends React.Component<void, void> {
 
     render() {
+
+        const nba = new StreamSubreddit('nbastreams');
+        const mlb = new StreamSubreddit('mlbstreams', 'Game Thread: ', ' at ', /\d/);
+
         return (
             <MuiThemeProvider muiTheme={getMuiTheme()}>
-                <div>
+                <div style={{backgroundColor: '#eee'}}>
                     <AppBar
                         title="amethyst"
                         showMenuIconButton={false}
                         zDepth={0} />
-                    <h1>NBA</h1>
-                    <SportListing sport='nba' />
-                    <h1>MLB</h1>
-                    <SportListing sport='mlb' />
-                    <h1>NFL</h1>
-                    <SportListing sport='nfl' />
+                        <h1>NBA</h1>
+                        <SportListing sub={nba} />
+                        <h1>MLB</h1>
+                        <SportListing sub={mlb} />
                 </div>
             </MuiThemeProvider>
         );

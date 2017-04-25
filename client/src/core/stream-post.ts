@@ -1,13 +1,16 @@
 import Axios from 'axios'
 
 import { RedditT1Data, RedditT3Data } from './models'
+
+import StreamSubreddit from './stream-subreddit'
 import StreamLink from './stream-link'
 
-const mdLink = /\[.+\]\(.+\)/g
+const MD_LINK = /\[.+\]\(.+\)/g
 
 export default class StreamPost {
 
     // Raw post data
+    private sub: StreamSubreddit;
     private data: RedditT3Data;
 
     // Home and Away Teams
@@ -17,14 +20,16 @@ export default class StreamPost {
     // Child stream links
     private streamLinks: StreamLink[]
 
-    constructor(data: RedditT3Data) {
+    constructor(sub: StreamSubreddit, data: RedditT3Data) {
+        this.sub = sub;
         this.data = data;
+
         this.streamLinks = null;
 
-        const awayStart = "Game Thread: ".length;
-        const awayEnd = data.title.indexOf('@') - 1;
-        const homeStart = awayEnd + 3;
-        const homeEnd = data.title.indexOf('(') - 1;
+        const awayStart = sub.preamble.length;
+        const awayEnd = data.title.indexOf(sub.at);
+        const homeStart = awayEnd + sub.at.length + 2;
+        const homeEnd = data.title.indexOf(data.title.match(sub.postamble)[0]) - 1;
 
         this.away = this.data.title.slice(awayStart, awayEnd);
         this.home = this.data.title.slice(homeStart, homeEnd);
@@ -41,22 +46,32 @@ export default class StreamPost {
                 // Parse comments out of response
                 const comments: RedditT1Data[] = res.data[1].data.children.map(c => c.data);
 
-                if (comments[0].body.startsWith('**Verified Streamers**')) {
+                const getCommentLinks = (comment: RedditT1Data) => {
                     // If there is a verified streams post pull links from there
-                    const streamLinks = []
+                    const links: StreamLink[] = []
 
                     // Loop through matching regex
                     let result;
-                    while(result = mdLink.exec(comments[0].body)) {
-                        streamLinks.push(new StreamLink(result[0]))
+                    while(result = MD_LINK.exec(comments[0].body)) {
+                        links.push(new StreamLink(result[0]))
                     }
 
-                    this.streamLinks = streamLinks;
-                    resolve(this.streamLinks);
+                    return links;
+                };
+
+                if (comments[0].body.startsWith('**Verified Streamers**')) {
+                    // If there is a verified streams post pull links from there
+                    this.streamLinks = getCommentLinks(comments[0]);
                 } else {
-                    // TODO pull links from comments
-                    reject('No verified streamers post')
+                    // Otherwise go through all comments (lol)
+                    this.streamLinks = [];
+                    for (let i = 0; i < comments.length; i++) {
+                        this.streamLinks = this.streamLinks
+                            .concat(getCommentLinks(comments[i]));
+                    }
                 }
+
+                resolve(this.streamLinks);
             }).catch(err => {
                 reject('Could not get links');
             })
@@ -71,7 +86,17 @@ export default class StreamPost {
         return this.home;
     }
 
+    getHomeLogo(): string {
+        const keys = Object.keys(this.sub.logos).filter(k => k.includes(this.home));
+        return this.sub.logos[keys[0]];
+    }
+
     getAway(): string {
         return this.away;
+    }
+
+    getAwayLogo(): string {
+        const keys = Object.keys(this.sub.logos).filter(k => k.includes(this.away));
+        return this.sub.logos[keys[0]];
     }
 }
